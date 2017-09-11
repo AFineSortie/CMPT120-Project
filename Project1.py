@@ -42,6 +42,6 @@ print()
 input("Press 'Enter' to continue")
 print()
 print("To Be Continued...")
-    
+print("(c) 2017 Christopher Petrucelli, christopher.petrucelli1@marist.edu")
 
 
