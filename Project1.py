@@ -19,16 +19,23 @@ print(house)
 print("Your score is", playerScore)
 print()
 input("Press 'Enter' to continue")
+playerScore = playerScore + 5
 print()
 print(room)
+print("Your score is", playerScore)
 print()
 input("Press 'Enter' to continue")
+playerScore = playerScore + 5
 print()
 print(bed)
+print("Your score is", playerScore)
 print()
 input("Press 'Enter' to continue")
+playerScore = playerScore + 5
 print()
 print(sleep)
+print("Your score is", playerScore)
+print("Game Over")
     
 
 
