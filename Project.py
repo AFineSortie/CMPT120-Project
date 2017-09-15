@@ -6,42 +6,65 @@ intro = "You finally pull into your driveway after your hour drive home. You shu
 playerLocation = house
 playerScore = 0
 title = "Asleep"
+
 print(title)
 print("======")
 name = input("What is your name? ")
+
 print()
+
 print(intro)
 print()
+
 input("Press 'Enter' to continue")
 playerScore = playerScore + 5
+
 print()
+
 print(house)
 print("Your score is", playerScore)
+
 print()
+
 input("Press 'Enter' to continue")
 playerLocation = room
 playerScore = playerScore + 5
+
 print()
+
 print(room)
 print("Your score is", playerScore)
+
 print()
+
 input("Press 'Enter' to continue")
 playerLocation = bed
 playerScore = playerScore + 5
+
 print()
+
 print(bed)
 print("Your score is", playerScore)
+
 print()
+
 input("Press 'Enter' to continue")
 playerLocation = sleep
 playerScore = playerScore + 5
+
 print()
+
 print(sleep)
 print("Your score is", playerScore)
+
 print()
+
 input("Press 'Enter' to continue")
+
 print()
+
 print("To Be Continued...")
+print("Final score:", playerScore)
 print("(c) 2017 Christopher Petrucelli, christopher.petrucelli1@marist.edu")
 
 
