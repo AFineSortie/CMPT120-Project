@@ -90,6 +90,8 @@ def main():
                     playerScore = playerScore + 5
                 elif kitchenVisit == True:
                     print("\nYou're really TIRED, not HUNGRY.")
+            elif command == "north" or "south":
+                print("\nYou can not go that way!")
             
 
 #Room
@@ -110,6 +112,9 @@ def main():
                 bedVisit = True
                 playerScore = playerScore + 5
                 print(bed)
+            elif command == "west" or "south":
+                print("\nYou can not go that way!")
+                
                     
 
 
@@ -126,6 +131,8 @@ def main():
                 playerLocation = "Living Room"
                 print("\nYou're back in the living room, struggling to keep your eyes open.")
 
+            elif command == "east" or "south" or "north":
+                print("\nYou can not go that way!")
 
 # Bed
         elif playerLocation == "Bed":
@@ -145,6 +152,7 @@ def main():
 
             else:
                 print("\nYou don't dare do anything other than go to sleep right now.")
+
 
 
 # Living room dream
@@ -167,6 +175,8 @@ def main():
                 elif roomDreamVisit == True:
                     print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
 
+            elif command == "north" or "south" or "east":
+                print("\nYou can not go that way!")
 
 # Room dream
         elif playerLocation == "Room?":
@@ -183,6 +193,11 @@ def main():
 
             elif command == "wake up":
                 break
+            
+            elif command == "north" or "south" or "west":
+                print("\nYou can not go that way!")
+
+            
             
             
                 
