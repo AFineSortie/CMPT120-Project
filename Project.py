@@ -1,12 +1,13 @@
 # Chris Petrucelli
 # CMPT 120 Project
 # Text-based Adventure
-livingRoom = "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you."
+livingRoom = "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you." 
 room = "\nYour bedroom, with your bed in the center of the back wall, to the North. You take your medicine and prepare for bed."
 bed = "\nYour bed, not as comfortable as it used to be... Still, you are weary enough to sleep."
 sleep = "\nYou drift to sleep, and find yourself arriving home after a long and difficult day of work, like all the others..."
 livingRoomDream = "\nYou drop your keys and winter jacket on the table, exhausted. It takes you a minute to realize what you're doing, you should be asleep, right? A faint glow is coming from your bedroom down the hall."
 intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
+#I can't figure out how to break these up they will not work for me
 playerLocation = "Living Room"
 playerScore = 0
 title = "Asleep"
