@@ -1,11 +1,11 @@
 # Chris Petrucelli
 # CMPT 120 Project
 # Text-based Adventure
-livingRoom = "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you." 
-room = "\nYour bedroom, with your bed in the center of the back wall, to the North. You take your medicine and prepare for bed."
-bed = "\nYour bed, not as comfortable as it used to be... Still, you are weary enough to sleep."
-sleep = "\nYou drift to sleep, and find yourself arriving home after a long and difficult day of work, like all the others..."
-livingRoomDream = "\nYou drop your keys and winter jacket on the table, exhausted. It takes you a minute to realize what you're doing, you should be asleep, right? A faint glow is coming from your bedroom down the hall."
+livingRoom1 = "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you." 
+room1 = "\nYour bedroom, with your bed in the center of the back wall, to the North. You take your medicine and prepare for bed."
+bed1 = "\nYour bed, not as comfortable as it used to be... Still, you are weary enough to sleep."
+sleep1 = "\nYou drift to sleep, and find yourself arriving home after a long and difficult day of work, like all the others..."
+livingRoomDream1 = "\nYou drop your keys and winter jacket on the table, exhausted. It takes you a minute to realize what you're doing, you should be asleep, right? A faint glow is coming from your bedroom down the hall."
 intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
 #I can't figure out how to break these up they will not work for me
 playerLocation = "Living Room"
@@ -13,13 +13,16 @@ playerScore = 0
 title = "Asleep"
 commands = "\nValid commands: North, South, East, West, Help, Quit"
 
-livingRoomVisit = False
-roomVisit = False
-bedVisit = False
-sleepVisit = False
-livingRoomDreamVisit = False
-roomDreamVisit = False
-kitchenVisit = False
+livingRoomVisit1 = 0
+roomVisit1 = 1
+bedVisit1 = 2
+sleepVisit1 = 3
+livingRoomDreamVisit1 = 4
+roomDreamVisit1 = 5
+kitchenVisit1 = 6
+bedVisit2 = 7
+roomVisit2 = 8
+placeVisit = [False, False, False, False, False, False, False, False, False]
 
 def start():
     print(title)
@@ -39,9 +42,9 @@ def end():
 
 start()
 
-kitchen = "\nYou go into the kitchen, even though you aren't hungry. A letter with " + name + " on it is held on the fridge by a magnet, you don't dare touch it."
-roomDream = "\nYou push open the door, and find the TV still on. A note lies on the bed, with the name " + name + " written on the top in HER handwriting."
-
+kitchen1 = "\nYou go into the kitchen, even though you aren't hungry. A letter with " + name + " on it is held on the fridge by a magnet, you don't dare touch it."
+roomDream1 = "\nYou push open the door, and find the TV still on. A note lies on the bed, with the name " + name + " written on the top in HER handwriting."
+gameLocations = [
 
 playerScore = playerScore + 5
 print(livingRoom)
