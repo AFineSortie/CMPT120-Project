@@ -44,6 +44,13 @@ start()
 
 kitchen1 = "\nYou go into the kitchen, even though you aren't hungry. A letter with " + name + " on it is held on the fridge by a magnet, you don't dare touch it."
 roomDream1 = "\nYou push open the door, and find the TV still on. A note lies on the bed, with the name " + name + " written on the top in HER handwriting."
+bedVisit2 = "\nYou wake in a cold sweat. Your dream had been so real, it felt as if you had really been there reliving that same night. You don't feel so well, but still, you decide to get out of bed and go to work."
+roomVisit2 = "\nYou change into your work clothes and take your medicine for the morning, but you still need to shower and brush your teeth in the bathroom to the West."
+
+gameMap = "    Bed", \
+          "     |", \
+          "    Room -- Living Room -- Kitchen"
+
 gameLocations = [ "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you."]
 
 playerScore = playerScore + 5
@@ -52,19 +59,22 @@ print(livingRoom1)
 def main():
 
     while True:
-
-        global playerLocation
-        global playerScore
-        global livingRoomVisit
-        global roomVisit
-        global bedVisit
-        global sleepVisit
-        global livingRoomDreamVisit
-        global roomDreamVisit
-        global kitchenVisit
         
         print("\nLocation:", playerLocation, "\n")
         print("Your score is", playerScore, "\n")
+
+        command == input("Enter a command: ").lower()
+        if command == "help":
+            print(commands)
+
+        elif command == "quit":
+            break
+
+        elif command == "points":
+            print(playerScore)
+
+        elif command == "map":
+            print(gameMap)
 
 
 # Living Room
