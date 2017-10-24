@@ -44,10 +44,10 @@ start()
 
 kitchen1 = "\nYou go into the kitchen, even though you aren't hungry. A letter with " + name + " on it is held on the fridge by a magnet, you don't dare touch it."
 roomDream1 = "\nYou push open the door, and find the TV still on. A note lies on the bed, with the name " + name + " written on the top in HER handwriting."
-gameLocations = [
+gameLocations = [ "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you."]
 
 playerScore = playerScore + 5
-print(livingRoom)
+print(livingRoom1)
 
 def main():
 
