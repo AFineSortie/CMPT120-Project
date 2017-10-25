@@ -13,7 +13,7 @@ playerScore = 0
 title = "Asleep"
 commands = "\nValid commands: North, South, East, West, Help, Map, Points, Quit"
 wrongWay = "You can't go that way!"
-
+name = "example name"
 livingRoomVisit1 = 0
 roomVisit1 = 1
 bedVisit1 = 2
@@ -25,14 +25,47 @@ bedVisit2 = 7
 roomVisit2 = 8
 placeVisit = [False, False, False, False, False, False, False, False, False]
 
+gameLocations = [ ("\nYou drop your keys and jacket on the table, exhausted "
+                   "after a long and difficult day of work, like all the others. "
+                   "Your room is just down the hall to the West, waiting for you."),
+                  ("\nYour bedroom, with your bed in the center of the back "
+                   "wall, to the North. You take your medicine and prepare for "
+                   "bed."),
+                  ("\nYour bed, not as comfortable as it used to be... Still, "
+                   "you are weary enough to sleep."),
+                  ("\nYou drift to sleep, and find yourself arriving home "
+                   "after a long and difficult day of work, like all the others..."), 
+                  ("\nYou drop your keys and winter jacket on the table, "
+                   "exhausted. It takes you a minute to realize what you're "
+                   "doing, you should be asleep, right? A faint glow is coming "
+                   "from your bedroom down the hall."),
+                  ("\nYou push open the door, and find the TV still on. A note "
+                   "lies on the bed, with the name " + name + " written on the "
+                   "top in HER handwriting."),
+                  ("\nYou go into the kitchen, even though you aren't hungry. A "
+                   "letter with " + name + " on it is held on the fridge by a magnet, you "
+                   "don't really want to think about it..."),
+                  ("\nYou wake in a cold sweat. Your dream had been so real, "
+                   "it felt as if you had really been there reliving that same "
+                   "night. You don't feel so well, but still, you decide to get "
+                   "out of bed and go to work."),
+                  ("\nYou change into your work clothes and take your medicine "
+                   "for the morning, but you still need to shower and brush your "
+                   "teeth in the bathroom to the West.")]
 def start():
     print(title)
     print("======\n")
 
     global name
+    global playerScore
     name = str(input("What is your name? "))        
-
+    # Hey this worked print(("i am really not very sure about how to seperate a string into "
+    # "multiple lines but i saw this somewhere"))
     print(intro)
+    playerScore = playerScore + 5
+    print(gameLocations[0])
+
+    
 
 def end():
     print("\nTo Be Continued...")
@@ -52,10 +85,9 @@ gameMap = "    Bed", \
           "     |", \
           "    Room -- Living Room -- Kitchen"
 
-gameLocations = [ "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you."]
 
-playerScore = playerScore + 5
-print(livingRoom1)
+
+
 
 def main():
 
@@ -78,22 +110,26 @@ def main():
             print(gameMap)
 
         elif command == "north":
-            if playerLoaction ==
+            if playerLoaction == "1":
+                continue
             else:
                 print(wrongWay)
 
         elif command == "south":
-            if playerLocation ==
+            if playerLocation == "1":
+                continue
             else:
                 print(wrongWay)
 
         elif command == "east":
-            if playerLocation ==
+            if playerLocation == "1":
+                continue
             else:
                 print(wrongWay)
 
         elif command == "west":
-            if playerLocation ==
+            if playerLocation == "1":
+                continue
             else:
                 print(wrongWay)
 
