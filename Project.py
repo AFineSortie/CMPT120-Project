@@ -11,7 +11,8 @@ intro = "\nYou finally pull into your driveway after your hour drive home. You s
 playerLocation = "Living Room"
 playerScore = 0
 title = "Asleep"
-commands = "\nValid commands: North, South, East, West, Help, Quit"
+commands = "\nValid commands: North, South, East, West, Help, Map, Points, Quit"
+wrongWay = "You can't go that way!"
 
 livingRoomVisit1 = 0
 roomVisit1 = 1
@@ -75,6 +76,26 @@ def main():
 
         elif command == "map":
             print(gameMap)
+
+        elif command == "north":
+            if playerLoaction ==
+            else:
+                print(wrongWay)
+
+        elif command == "south":
+            if playerLocation ==
+            else:
+                print(wrongWay)
+
+        elif command == "east":
+            if playerLocation ==
+            else:
+                print(wrongWay)
+
+        elif command == "west":
+            if playerLocation ==
+            else:
+                print(wrongWay)
 
 
 # Living Room
