@@ -62,11 +62,13 @@ def start():
     print("======\n")
 
     global playerScore
-    # Hey this worked print(("i am really not very sure about how to seperate a string into "
+    global placeVisit
+    # Hey this worked: print(("i am really not very sure about how to seperate a string into "
     # "multiple lines but i saw this somewhere"))
     print(intro)
     playerScore = playerScore + 5
     print(gameLocations[0])
+    placeVisit[0] = True
     score()
 
 
@@ -85,7 +87,10 @@ gameMap = "    Bed\n    |\n    Room -- Living Room -- Kitchen"
 def goto(location):
     global playerScore
     global playerLocation
-    if location == "Kitchen":
+    global placeVisit
+    global days
+    
+    if location == "Kitchen" and days == 0:
         playerLocation = "Kitchen"
         if placeVisit[6] == False:
             placeVisit[6] = True
@@ -94,7 +99,72 @@ def goto(location):
             score()
         elif placeVisit[6] == True:
             print("\nYou're really TIRED, not HUNGRY.")
+
+    elif location == "Bedroom" and days == 0:
+        playerLocation = "Bedroom"
+        if placeVisit[1] == False:
+            placeVisit[1] = True
+            print(gameLocations[1])
+            playerScore = playerScore + 5
+            score()
+        elif placeVisit[1] == True:
+            print("\nThe bed is so close...")
+    elif location == "Bedroom" and days == 1:
+        playerLocation = "Bedroom"
+        if placeVisit[8] == False:
+            placeVisit[8] = True
+            print(gameLocations[8])
+            playerScore = playerScore + 5
+            score()
+            return False
+
+    elif location == "Living Room" and days == 0:
+        playerLocation = "Living Room"
+        print("\nYou're back in the living room, struggling to keep your eyes open.")
+
+    elif location == "Bed" and days == 0:
+        if placeVisit[2] == False:
+            playerLocation = "Bed"
+            placeVisit[2] = True
+            print(gameLocations[2])
+            playerScore = playerScore + 5
+            score()
+        elif placeVisit[2] == True:
+            playerLocation = "Bed"
+            print("\nEnter 'Sleep' to sleep.")
+    elif location == "Bed" and days == 1:
+        if placeVisit[7] == False:
+            playerLocation = "Bed"
+            print(gameLocations[7])
+            placeVisit[7] = True
+            playerScore = playerScore + 5
+            score()
+        elif placeVisit[7] == True:
+            print("\nYou should really get going if you want to get to work on time.")
     
+    elif location == "Living Room?" and days == 0:
+        if placeVisit[4] == False and placeVisit[3] == False:
+            print(gameLocations[3])
+            placeVisit[3] = True
+            print(gameLocations[4])
+            placeVisit[4] = True
+            playerScore = playerScore + 10
+            score()
+        if placeVisit[4] == True:
+            playerLocation = "Living Room?"
+            print("\nIt is unusually cold in the house.")
+
+    elif location == "Bedroom?" and days == 0:
+        playerLocation = "Bedroom?"
+        if placeVisit[5] == False:
+            placeVisit[5] = True
+            print(gameLocations[5])
+            print("\nYou need to wake up. Type 'Wake up' at any time to wake up.")
+            playerScore = playerScore + 5
+            score()
+        elif placeVisit[5] == True:
+            print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
+        
 def main():
     
     while True:
@@ -118,98 +188,64 @@ def main():
         elif command == "location":
             print("\nLocation:", playerLocation)
 
+
+
         elif command == "north":
             if playerLocation == "Bedroom":
-                playerLocation = "Bed"
-                placeVisit[2] = True
-                print(gameLocations[2])
-                playerScore = playerScore + 5
-                score()
+                goto("Bed")
                 
             else:
                 print(wrongWay)
 
+                
         elif command == "south":
-            if playerLocation == "Bed" and days == 1:
-                playerLocation = "Bedroom"
-                if placeVisit[8] == False:
-                    placeVisit[8] = True
-                    print(gameLocations[8])
-                    playerScore = playerScore + 5
-                    score()
-    #Ending here for now
-                    break
-    #Ending here for now
-                elif placeVisit[8] == True:
-                    print("You should really get going if you want to get to work on time.")
+            if playerLocation == "Bed":
+                goto("Bedroom")
+                
             else:
                 print(wrongWay)
+
 
         elif command == "east":
             if playerLocation == "Living Room":
                 goto("Kitchen")
 
             elif playerLocation == "Bedroom":
-                playerLocation = "Living Room"
-                print("\nYou're back in the living room, struggling to keep your eyes open.")
+                goto("Living Room")
 
             elif playerLocation == "Bedroom?":
-                playerLocation = "Living Room?"
-                print("\nIt is unusually cold in the house.")
+                goto("Living Room?")
                 
             else:
                 print(wrongWay)
 
         elif command == "west":
             if playerLocation == "Living Room":
-                playerLocation = "Bedroom"
-                if placeVisit[1] == False:
-                    placeVisit[1] = True
-                    print(gameLocations[1])
-                    playerScore = playerScore + 5
-                    score()
-                elif placeVisit[1] == True:
-                    print("\nThe bed is so close...")
+                goto("Bedroom")
                     
             elif playerLocation == "Kitchen":
-                playerLocation = "Living Room"
-                print("\nYou're back in the living room, struggling to keep your eyes open.")
+                goto("Living Room")
 
             elif playerLocation == "Living Room?":
-                playerLocation = "Bedroom?"
-                if placeVisit[5] == False:
-                    placeVisit[5] = True
-                    print(gameLocations[5])
-                    print("\nYou need to wake up. Type 'Wake up' at any time to wake up.")
-                    playerScore = playerScore + 5
-                    score()
-                elif placeVisit[5] == True:
-                    print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
+                goto("Bedroom?")
                 
             else:
                 print(wrongWay)
 
         elif command == "sleep":
             if playerLocation == "Bed" and days == 0:
-                playerLocation = "Living Room?"
-                print(gameLocations[3])
-                print(gameLocations[4])
-                placeVisit[3] = True
-                placeVisit[4] = True
-                playerScore = playerScore + 10
-                score()
+                goto("Living Room?")
             else:
                 print("\nYou can't possibly expect to sleep here...")
 
         elif command == "wake up":
-            if playerLocation == "Living Room?" or "Bedroom?":
+            if playerLocation == "Living Room?" or "Bedroom?" and days == 0:
                 days = days + 1
                 day()
-                playerLocation = "Bed"
-                print(gameLocations[7])
-                placeVisit[7] = True
-                playerScore = playerScore + 5
-                score()
+                goto("Bed")
+
+            else:
+                print("\nYou're not asleep, are you?")
 
         else:
             print("\nThat is not a valid command")
