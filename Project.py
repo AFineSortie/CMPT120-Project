@@ -78,8 +78,6 @@ def end():
     print("Final score:", playerScore, "\n")
     print("(c) 2017 Christopher Petrucelli, christopher.petrucelli1@marist.edu")
 
-start()
-
 #end() Testing new end function
 
 gameMap = "    Bed\n    |\n    Room -- Living Room -- Kitchen"
@@ -116,8 +114,7 @@ def goto(location):
             print(gameLocations[8])
             playerScore = playerScore + 5
             score()
-            return False
-
+            
     elif location == "Living Room" and days == 0:
         playerLocation = "Living Room"
         print("\nYou're back in the living room, struggling to keep your eyes open.")
@@ -165,7 +162,7 @@ def goto(location):
         elif placeVisit[5] == True:
             print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
         
-def main():
+def game():
     
     while True:
         global playerLocation
@@ -201,7 +198,7 @@ def main():
         elif command == "south":
             if playerLocation == "Bed":
                 goto("Bedroom")
-                
+                break
             else:
                 print(wrongWay)
 
@@ -256,16 +253,12 @@ def main():
                 
   
             
-         
-    
+def main():
+    start() 
+    game()
+    end()
 
-    
 main()
-
-
-end()
-
-
 
 
 
