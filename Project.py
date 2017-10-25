@@ -1,19 +1,13 @@
 # Chris Petrucelli
 # CMPT 120 Project
 # Text-based Adventure
-livingRoom1 = "\nYou drop your keys and jacket on the table, exhausted after a long and difficult day of work, like all the others. Your room is just down the hall to the West, waiting for you." 
-room1 = "\nYour bedroom, with your bed in the center of the back wall, to the North. You take your medicine and prepare for bed."
-bed1 = "\nYour bed, not as comfortable as it used to be... Still, you are weary enough to sleep."
-sleep1 = "\nYou drift to sleep, and find yourself arriving home after a long and difficult day of work, like all the others..."
-livingRoomDream1 = "\nYou drop your keys and winter jacket on the table, exhausted. It takes you a minute to realize what you're doing, you should be asleep, right? A faint glow is coming from your bedroom down the hall."
 intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
-#I can't figure out how to break these up they will not work for me
-playerLocation = "Living Room"
-playerScore = 0
 title = "Asleep"
-commands = "\nValid commands: North, South, East, West, Help, Map, Points, Quit"
+commands = "\nValid commands: North, South, East, West, Help, Map, Points, Location, Quit"
 wrongWay = "You can't go that way!"
 name = "example name"
+playerLocation = "Living Room"
+playerScore = 0
 livingRoomVisit1 = 0
 roomVisit1 = 1
 bedVisit1 = 2
@@ -52,6 +46,11 @@ gameLocations = [ ("\nYou drop your keys and jacket on the table, exhausted "
                   ("\nYou change into your work clothes and take your medicine "
                    "for the morning, but you still need to shower and brush your "
                    "teeth in the bathroom to the West.")]
+
+def score():
+    global playerScore
+    print("\nYour score is: ", playerScore)
+
 def start():
     print(title)
     print("======\n")
@@ -64,8 +63,9 @@ def start():
     print(intro)
     playerScore = playerScore + 5
     print(gameLocations[0])
+    score()
 
-    
+
 
 def end():
     print("\nTo Be Continued...")
@@ -76,27 +76,17 @@ def end():
 
 start()
 
-kitchen1 = "\nYou go into the kitchen, even though you aren't hungry. A letter with " + name + " on it is held on the fridge by a magnet, you don't dare touch it."
-roomDream1 = "\nYou push open the door, and find the TV still on. A note lies on the bed, with the name " + name + " written on the top in HER handwriting."
-bedVisit2 = "\nYou wake in a cold sweat. Your dream had been so real, it felt as if you had really been there reliving that same night. You don't feel so well, but still, you decide to get out of bed and go to work."
-roomVisit2 = "\nYou change into your work clothes and take your medicine for the morning, but you still need to shower and brush your teeth in the bathroom to the West."
-
 gameMap = "    Bed", \
           "     |", \
           "    Room -- Living Room -- Kitchen"
 
-
-
-
-
 def main():
 
     while True:
-        
-        print("\nLocation:", playerLocation, "\n")
-        print("Your score is", playerScore, "\n")
+        global playerLocation
+        global playerScore
+        command = input("\nEnter a command: ").lower()
 
-        command == input("Enter a command: ").lower()
         if command == "help":
             print(commands)
 
@@ -104,14 +94,22 @@ def main():
             break
 
         elif command == "points":
-            print(playerScore)
+            score()
 
         elif command == "map":
             print(gameMap)
 
+        elif command == "location":
+            print("\nLocation:", playerLocation)
+
         elif command == "north":
-            if playerLoaction == "1":
-                continue
+            if playerLocation == "Bedroom":
+                playerLocation = "Bed"
+                placeVisit[2] = True
+                print(gameLocations[2])
+                playerScore = playerScore + 5
+                score()
+                
             else:
                 print(wrongWay)
 
@@ -122,69 +120,60 @@ def main():
                 print(wrongWay)
 
         elif command == "east":
-            if playerLocation == "1":
-                continue
+            if playerLocation == "Living Room":
+                playerLocation = "Kitchen"
+                if placeVisit[6] == False:
+                    placeVisit[6] = True
+                    print(gameLocations[6])
+                    playerScore = playerScore + 5
+                    score()
+                elif placeVisit[6] == True:
+                    print("\nYou're really TIRED, not HUNGRY.")
+
+            elif playerLocation == "Bedroom":
+                playerlocation = "Living Room"
+                print("\nYou're back in the living room, struggling to keep your eyes open.")
+
             else:
                 print(wrongWay)
 
         elif command == "west":
-            if playerLocation == "1":
-                continue
+            if playerLocation == "Living Room":
+                playerLocation = "Bedroom"
+                if placeVisit[1] == False:
+                    placeVisit[1] = True
+                    print(gameLocations[1])
+                    playerScore = playerScore + 5
+                    score()
+                elif placeVisit[1] == True:
+                    print("\nThe bed is so close...")
             else:
                 print(wrongWay)
 
 
-# Living Room
-        if playerLocation == "Living Room":
-            livingRoomVisit = True
-            command = input("Enter a command: ").lower()
-            if command == "help":
-                print(commands)
 
-            elif command == "quit":
-                break
-
-            elif command == "west":
-                playerLocation = "Room"
-                if roomVisit == False:
-                    roomVisit = True
-                    playerScore = playerScore + 5
-                    print(room)
-                elif roomVisit == True:
-                    print("\nThe bed is so close...")
-
-            elif command == "east":
-                playerLocation = "Kitchen"
-                if kitchenVisit == False:
-                    kitchenVisit = True
-                    print(kitchen)
-                    playerScore = playerScore + 5
-                elif kitchenVisit == True:
-                    print("\nYou're really TIRED, not HUNGRY.")
-            elif command == "north" or "south":
-                print("\nYou can not go that way!")
             
 
 #Room
-        elif playerLocation == "Room":
-            command = input("Enter a command: ").lower()
-            if command == "help":
-                print(commands)
+        #elif playerLocation == "Room":
+            #command = input("Enter a command: ").lower()
+           # if command == "help":
+              #  print(commands)
                 
-            elif command == "quit":
-                break
+           # elif command == "quit":
+             #   break
 
-            elif command == "east":
-                playerLocation = "Living Room"
-                print("\nYou're back in the living room, struggling to keep your eyes open.")
+           # elif command == "east":
+             #   playerLocation = "Living Room"
+             #   print("\nYou're back in the living room, struggling to keep your eyes open.")
 
-            elif command == "north":
-                playerLocation = "Bed"
-                bedVisit = True
-                playerScore = playerScore + 5
-                print(bed)
-            elif command == "west" or "south":
-                print("\nYou can not go that way!")
+           # elif command == "north":
+            #    playerLocation = "Bed"
+              #  bedVisit = True
+             #   playerScore = playerScore + 5
+            #    print(bed)
+           # elif command == "west" or "south":
+            #    print("\nYou can not go that way!")
                 
                     
 
