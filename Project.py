@@ -63,7 +63,7 @@ def goto(matrix, currentLocation, playerLocation, direction):
     return newLocation
 
         
-def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation):
+def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory):
     while True:
     
         command = input("\nEnter a command: ").lower()
@@ -84,13 +84,27 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
             print("\nLocation:", playerLocation)
 
         elif command == "search":
-            pass
+            if placeSearched[currentLocation] == False:
+                placeSearched[currentLocation] = True
+                print("\nYou find", items[currentLocation])
+            else:
+                print("\nYou've already searched here.")
 
         elif command == "take":
-            pass
+            if placeSearched[currentLocation] == True:
+                if items[currentLocation] != "Nothing":
+                    inventory.append(items[currentLocation])
+                    print("\nYou take the item.")
+                else:
+                    print("\nThere is nothing to take!")
+            else:
+                print("\nYou have not searched here!")
+                
+        elif command == "inventory":
+            print(inventory)
 
         elif command == "look":
-            pass
+            print(gameLocations[currentLocation])
 
         elif command == "north":
             direction = 0
@@ -212,16 +226,16 @@ def main():
                   False,
                   False]
     
-    items = ["Map",
-             "Knife",
-             None,
-             None,
-             None,
-             None,
-             None,
-             None,
-             "Medicine",
-             None]
+    items = ["a map.",
+             "a knife.",
+             "nothing.",
+             "nothing.",
+             "nothing.",
+             "nothing.",
+             "nothing.",
+             "nothing.",
+             "your medicine.",
+             "nothing."]
     
     placeSearched = [False,
                      False,
@@ -233,7 +247,6 @@ def main():
                      False,
                      False,
                      False]
-    sleeping = "\nYou drift to sleep, and find yourself arriving home after a long and difficult day of work, like all the others..."
                    
     gameLocations = [ ("\nYou drop your keys and jacket on the table, exhausted "
                        "after a long and difficult day of work, like all the others. "
@@ -280,20 +293,20 @@ def main():
                      ("\nYou give yourself a once-over in the mirror. You look like a mess today.")]
                      
         #      N     S     E     W
-    matrix = [[None, None, 1, 2],
-              [None, None, None, 0],
-              [4, None, 0, 3],
-              [None, None, 2, None],
-              [None, 2, None, None],
-              [None, None, None, 6],
-              [None, None, 5, None],
-              [None, 8, None, None],
-              [7, None, None, 9],
-              [None, None, 8, None]]
+    matrix = [[0, 0, 1, 2],
+              [1, 1, 1, 0],
+              [4, 2, 0, 3],
+              [3, 3, 2, 3],
+              [4, 2, 4, 4],
+              [5, 5, 5, 6],
+              [6, 6, 5, 6],
+              [7, 8, 7, 7],
+              [7, 8, 8, 9],
+              [9, 9, 8, 9]]
 
     inventory = [ "Ring" ]
     start(title, intro, gameLocations, playerScore, placeVisit)
-    game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation)
+    game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory)
     end()
 
 main()
