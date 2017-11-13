@@ -19,7 +19,7 @@ def start(title, intro, gameLocations, playerScore, placeVisit):
 
 
 
-def end():
+def end(playerScore):
     print("\nTo Be Continued...")
     print("Final score:", playerScore, "\n")
     print("(c) 2017 Christopher Petrucelli, christopher.petrucelli1@marist.edu")
@@ -59,13 +59,14 @@ def goto(matrix, currentLocation, playerLocation, direction):
 
     elif currentLocation == 9:
         newLocation = matrix[currentLocation][direction]
-    print(newLocation)
     return newLocation
 
         
 def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory):
     while True:
-    
+        if "your medicine." in inventory:
+            break
+        
         command = input("\nEnter a command: ").lower()
 
         if command == "help":
@@ -78,7 +79,10 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
             score(playerScore)
 
         elif command == "map":
-            print(gameMap)
+            if "a map." in inventory:
+                print(gameMap)
+            else:
+                print("\nYou have no map!")
 
         elif command == "location":
             print("\nLocation:", playerLocation)
@@ -92,9 +96,10 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
 
         elif command == "take":
             if placeSearched[currentLocation] == True:
-                if items[currentLocation] != "Nothing":
+                if items[currentLocation] != "nothing.":
                     inventory.append(items[currentLocation])
                     print("\nYou take the item.")
+                    items[currentLocation] = "nothing."
                 else:
                     print("\nThere is nothing to take!")
             else:
@@ -155,6 +160,9 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
             currentLocation = place
 
         elif command == "sleep":
+            if "a knife." in inventory:
+                print("\nYou shouldn't have taken a knife to bed with you! You accidentally cut yourself and have to go to the hospital.")
+                return playerScore
             if currentLocation == 4:
                 currentLocation = 5
                 place = 5
@@ -306,8 +314,8 @@ def main():
 
     inventory = [ "Ring" ]
     start(title, intro, gameLocations, playerScore, placeVisit)
-    game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory)
-    end()
+    end(game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory))
+    
 
 main()
 
