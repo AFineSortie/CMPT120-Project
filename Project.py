@@ -14,10 +14,8 @@ def start(title, intro, gameLocations, playerScore, placeVisit):
     print(title)
     print("======\n")
     print(intro)
-    playerScore = playerScore + 5
     print(gameLocations[0])
     placeVisit[0] = True
-    score(playerScore)
 
 
 
@@ -30,92 +28,103 @@ def end():
 
 gameMap = "    Bed\n    |\n    Room -- Living Room -- Kitchen"
 
-def goto(location):
-    global playerScore
-    global playerLocation
-    global placeVisit
-    global days
+def goto(matrix, currentLocation, playerLocation, direction):
+
+    if currentLocation == 0:
+        newLocation = matrix[currentLocation][direction]
     
-    if location == "Kitchen" and days == 0:
-        playerLocation = "Kitchen"
-        if placeVisit[6] == False:
-            placeVisit[6] = True
-            print(gameLocations[6])
-            playerScore = playerScore + 5
-            score()
-        elif placeVisit[6] == True:
-            print("\nYou're really TIRED, not HUNGRY.")
+    elif currentLocation == 1:
+        newLocation = matrix[currentLocation][direction]
 
-    elif location == "Bedroom" and days == 0:
-        playerLocation = "Bedroom"
-        if placeVisit[1] == False:
-            placeVisit[1] = True
-            print(gameLocations[1])
-            playerScore = playerScore + 5
-            score()
-        elif placeVisit[1] == True:
-            print("\nThe bed is so close...")
-    elif location == "Bedroom" and days == 1:
-        playerLocation = "Bedroom"
-        if placeVisit[8] == False:
-            placeVisit[8] = True
-            print(gameLocations[8])
-            playerScore = playerScore + 5
-            score()
-            
-    elif location == "Living Room" and days == 0:
-        playerLocation = "Living Room"
-        print("\nYou're back in the living room, struggling to keep your eyes open.")
+    elif currentLocation == 2:
+        newLocation = matrix[currentLocation][direction]
 
-    elif location == "Bed" and days == 0:
-        if placeVisit[2] == False:
-            playerLocation = "Bed"
-            placeVisit[2] = True
-            print(gameLocations[2])
-            playerScore = playerScore + 5
-            score()
-        elif placeVisit[2] == True:
-            playerLocation = "Bed"
-            print("\nEnter 'Sleep' to sleep.")
-    elif location == "Bed" and days == 1:
-        if placeVisit[7] == False:
-            playerLocation = "Bed"
-            print(gameLocations[7])
-            placeVisit[7] = True
-            playerScore = playerScore + 5
-            score()
-        elif placeVisit[7] == True:
-            print("\nYou should really get going if you want to get to work on time.")
-    
-    elif location == "Living Room?" and days == 0:
-        if placeVisit[4] == False and placeVisit[3] == False:
-            print(gameLocations[3])
-            placeVisit[3] = True
-            print(gameLocations[4])
-            placeVisit[4] = True
-            playerScore = playerScore + 10
-            score()
-        if placeVisit[4] == True:
-            playerLocation = "Living Room?"
-            print("\nIt is unusually cold in the house.")
+    elif currentLocation == 3:
+        newLocation = matrix[currentLocation][direction]
 
-    elif location == "Bedroom?" and days == 0:
-        playerLocation = "Bedroom?"
-        if placeVisit[5] == False:
-            placeVisit[5] = True
-            print(gameLocations[5])
-            print("\nYou need to wake up. Type 'Wake up' at any time to wake up.")
-            playerScore = playerScore + 5
-            score()
-        elif placeVisit[5] == True:
-            print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
+    elif currentLocation == 4:
+        newLocation = matrix[currentLocation][direction]
+
+    elif currentLocation == 5:
+        newLocation = matrix[currentLocation][direction]
+
+    elif currentLocation == 6:
+        newLocation = matrix[currentLocation][direction]
+
+    elif currentLocation == 7:
+        newLocation = matrix[currentLocation][direction]
+
+    elif currentLocation == 8:
+        newLocation = matrix[currentLocation][direction]
+
+    elif currentLocation == 9:
+        newLocation = matrix[currentLocation][direction]
+    print(newLocation)
+    return newLocation
+
+    #elif currentLocation == "Bedroom" and days == 0:
+     #   playerLocation = "Bedroom"
+      #  if placeVisit[1] == False:
+       #     placeVisit[1] = True
+        #    print(gameLocations[1])
+         #   playerScore = playerScore + 5
+          #  score()
+        #elif placeVisit[1] == True:
+         #   print("\nThe bed is so close...")
+    #elif currentLocation == "Bedroom" and days == 1:
+#        playerLocation = "Bedroom"
+ #       if placeVisit[8] == False:
+  #          placeVisit[8] = True
+   #         print(gameLocations[8])
+   #         playerScore = playerScore + 5
+    #        score()    
+
+#    elif location == "Bed" and days == 0:
+ #       if placeVisit[2] == False:
+  #          playerLocation = "Bed"
+   #         placeVisit[2] = True
+    #        print(gameLocations[2])
+     #       playerScore = playerScore + 5
+      #      score()
+       # elif placeVisit[2] == True:
+        #    playerLocation = "Bed"
+         #   print("\nEnter 'Sleep' to sleep.")
+#    elif location == "Bed" and days == 1:
+ #       if placeVisit[7] == False:
+  #          playerLocation = "Bed"
+   #         print(gameLocations[7])
+    #        placeVisit[7] = True
+     #       playerScore = playerScore + 5
+      #      score()
+       # elif placeVisit[7] == True:
+        #    print("\nYou should really get going if you want to get to work on time.")
+    #
+    #elif location == "Living Room?" and days == 0:
+     #   if placeVisit[4] == False and placeVisit[3] == False:
+      #      print(gameLocations[3])
+       #     placeVisit[3] = True
+        #    print(gameLocations[4])
+         #   placeVisit[4] = True
+          #  playerScore = playerScore + 10
+           # score()
+#        if placeVisit[4] == True:
+ #           playerLocation = "Living Room?"
+  #          print("\nIt is unusually cold in the house.")
+#
+ #   elif location == "Bedroom?" and days == 0:
+  #      playerLocation = "Bedroom?"
+   #     if placeVisit[5] == False:
+    #        placeVisit[5] = True
+     #       print(gameLocations[5])
+      #      print("\nYou need to wake up. Type 'Wake up' at any time to wake up.")
+       #     playerScore = playerScore + 5
+        #    score()
+#        elif placeVisit[5] == True:
+ #           print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
         
-def game(matrix):
-    
+def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation):
     while True:
-        global playerLocation
-        global playerScore
-        global days
+    
         command = input("\nEnter a command: ").lower()
 
         if command == "help":
@@ -125,7 +134,7 @@ def game(matrix):
             break
 
         elif command == "points":
-            score()
+            score(playerScore)
 
         elif command == "map":
             print(gameMap)
@@ -143,46 +152,52 @@ def game(matrix):
             pass
 
         elif command == "north":
-            if playerLocation == "Bedroom":
-                goto("Bed")
-                
+            direction = 0
+            place = goto(matrix, currentLocation, playerLocation, direction)
+            if placeVisit[place] == False:
+                print(gameLocations[place])
+                placeVisit[place] = True
+                playerScore = playerScore + 5
+                score(playerScore)
             else:
-                print(wrongWay)
-
-                
+                print(gameShortLoc[place])
+            currentLocation = place
+    
         elif command == "south":
-            if playerLocation == "Bed":
-                goto("Bedroom")
-                break
+            direction = 1
+            place = goto(matrix, currentLocation, playerLocation, direction)
+            if placeVisit[place] == False:
+                print(gameLocations[place])
+                placeVisit[place] = True
+                playerScore = playerScore + 5
+                score(playerScore)
             else:
-                print(wrongWay)
-
+                print(gameShortLoc[place])
+            currentLocation = place
 
         elif command == "east":
-            if playerLocation == "Living Room":
-                goto("Kitchen")
-
-            elif playerLocation == "Bedroom":
-                goto("Living Room")
-
-            elif playerLocation == "Bedroom?":
-                goto("Living Room?")
-                
+            direction = 2
+            place = goto(matrix, currentLocation, playerLocation, direction)
+            if placeVisit[place] == False:
+                print(gameLocations[place])
+                placeVisit[place] = True
+                playerScore = playerScore + 5
+                score(playerScore)
             else:
-                print(wrongWay)
-
+                print(gameShortLoc[place])
+            currentLocation = place
+            
         elif command == "west":
-            if playerLocation == "Living Room":
-                goto("Bedroom")
-                    
-            elif playerLocation == "Kitchen":
-                goto("Living Room")
-
-            elif playerLocation == "Living Room?":
-                goto("Bedroom?")
-                
+            direction = 3
+            place = goto(matrix, currentLocation, playerLocation, direction)
+            if placeVisit[place] == False:
+                print(gameLocations[place])
+                placeVisit[place] = True
+                playerScore = playerScore + 5
+                score(playerScore)
             else:
-                print(wrongWay)
+                print(gameShortLoc[place])
+            currentLocation = place
 
         elif command == "sleep":
             if playerLocation == "Bed" and days == 0:
@@ -214,8 +229,10 @@ def main():
     commands = "\nValid commands: North, South, East, West, Help, Map, Points, Location, Quit"
     wrongWay = "\nYou can't go that way!"
     playerLocation = "Living Room"
+    currentLocation = 0
     days = 0
     playerScore = 0
+    direction = "some way"
     name = str(input("What is your name? "))
     
     livingRoom0 = 0
@@ -261,8 +278,7 @@ def main():
                      False,
                      False,
                      False]
-    sleeping = "\nYou drift to sleep, and find yourself arriving home "
-                   "after a long and difficult day of work, like all the others..."
+    sleeping = "\nYou drift to sleep, and find yourself arriving home after a long and difficult day of work, like all the others..."
                    
     gameLocations = [ ("\nYou drop your keys and jacket on the table, exhausted "
                        "after a long and difficult day of work, like all the others. "
@@ -292,7 +308,7 @@ def main():
                        "out of bed and go to work."),
                       ("\nYou change into your work clothes and take your medicine "
                        "for the morning, but you still need to shower and brush your "
-                       "teeth in the bathroom to the West.")
+                       "teeth in the bathroom to the West."),
                       ("\nYou enter the bathroom and take your shower, but still, "
                        "the cold feeling from that dream stays with you")]
 
@@ -321,8 +337,8 @@ def main():
               [None, None, 8, None]]
 
     inventory = [ "Ring" ]
-    start(title, intro, gameLocations, playerScore, placeVisit) 
-    game(matrix)
+    start(title, intro, gameLocations, playerScore, placeVisit)
+    game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation)
     end()
 
 main()
