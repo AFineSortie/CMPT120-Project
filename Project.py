@@ -65,7 +65,7 @@ def goto(matrix, currentLocation, playerLocation, direction):
 def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory):
     while True:
         if "your medicine." in inventory:
-            break
+            return playerScore
         
         command = input("\nEnter a command: ").lower()
 
