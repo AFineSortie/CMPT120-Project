@@ -26,7 +26,7 @@ def end():
 
 #end() Testing new end function
 
-gameMap = "    Bed\n    |\n    Room -- Living Room -- Kitchen"
+gameMap = "                Bed\n                 |\n    Bathroom -- Room -- Living Room -- Kitchen"
 
 def goto(matrix, currentLocation, playerLocation, direction):
 
@@ -62,65 +62,6 @@ def goto(matrix, currentLocation, playerLocation, direction):
     print(newLocation)
     return newLocation
 
-    #elif currentLocation == "Bedroom" and days == 0:
-     #   playerLocation = "Bedroom"
-      #  if placeVisit[1] == False:
-       #     placeVisit[1] = True
-        #    print(gameLocations[1])
-         #   playerScore = playerScore + 5
-          #  score()
-        #elif placeVisit[1] == True:
-         #   print("\nThe bed is so close...")
-    #elif currentLocation == "Bedroom" and days == 1:
-#        playerLocation = "Bedroom"
- #       if placeVisit[8] == False:
-  #          placeVisit[8] = True
-   #         print(gameLocations[8])
-   #         playerScore = playerScore + 5
-    #        score()    
-
-#    elif location == "Bed" and days == 0:
- #       if placeVisit[2] == False:
-  #          playerLocation = "Bed"
-   #         placeVisit[2] = True
-    #        print(gameLocations[2])
-     #       playerScore = playerScore + 5
-      #      score()
-       # elif placeVisit[2] == True:
-        #    playerLocation = "Bed"
-         #   print("\nEnter 'Sleep' to sleep.")
-#    elif location == "Bed" and days == 1:
- #       if placeVisit[7] == False:
-  #          playerLocation = "Bed"
-   #         print(gameLocations[7])
-    #        placeVisit[7] = True
-     #       playerScore = playerScore + 5
-      #      score()
-       # elif placeVisit[7] == True:
-        #    print("\nYou should really get going if you want to get to work on time.")
-    #
-    #elif location == "Living Room?" and days == 0:
-     #   if placeVisit[4] == False and placeVisit[3] == False:
-      #      print(gameLocations[3])
-       #     placeVisit[3] = True
-        #    print(gameLocations[4])
-         #   placeVisit[4] = True
-          #  playerScore = playerScore + 10
-           # score()
-#        if placeVisit[4] == True:
- #           playerLocation = "Living Room?"
-  #          print("\nIt is unusually cold in the house.")
-#
- #   elif location == "Bedroom?" and days == 0:
-  #      playerLocation = "Bedroom?"
-   #     if placeVisit[5] == False:
-    #        placeVisit[5] = True
-     #       print(gameLocations[5])
-      #      print("\nYou need to wake up. Type 'Wake up' at any time to wake up.")
-       #     playerScore = playerScore + 5
-        #    score()
-#        elif placeVisit[5] == True:
- #           print("\nThe note is still laying on the bed. You take in the handwriting of your name, " + name + ", once again. It's just the same as that night...")
         
 def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation):
     while True:
@@ -200,16 +141,30 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
             currentLocation = place
 
         elif command == "sleep":
-            if playerLocation == "Bed" and days == 0:
-                goto("Living Room?")
+            if currentLocation == 4:
+                currentLocation = 5
+                place = 5
+                if placeVisit[place] == False:
+                    print(gameLocations[place])
+                    placeVisit[place] = True
+                    playerScore = playerScore + 5
+                    score(playerScore)
+                else:
+                    print(gameShortLoc[place])
             else:
                 print("\nYou can't possibly expect to sleep here...")
 
         elif command == "wake up":
-            if playerLocation == "Living Room?" or "Bedroom?" and days == 0:
-                days = days + 1
-                day()
-                goto("Bed")
+            if currentLocation == 5 or currentLocation == 6:
+                currentLocation = 7
+                place = 7
+                if placeVisit[place] == False:
+                    print(gameLocations[place])
+                    placeVisit[place] = True
+                    playerScore = playerScore + 5
+                    score(playerScore)
+                else:
+                    print(gameShortLoc[place])
 
             else:
                 print("\nYou're not asleep, are you?")
@@ -290,7 +245,7 @@ def main():
                        "wall, to the North. You take your medicine and prepare for "
                        "bed. You'll have to remember to take it every morning and night"),
                       ("\nYou use the bathroom, even though you didnt really have to, "
-                       "and prepare to go to sleep"), 
+                       "and prepare to go to sleep."), 
                       ("\nYour bed, not as comfortable as it used to be... Still, "
                        "you are weary enough to sleep. Enter 'Sleep' to sleep."),
                       ("\nYou drift to sleep, and find yourself arriving home "
@@ -301,7 +256,7 @@ def main():
                        "from your bedroom down the hall."),
                       ("\nYou push open the door, and find the TV still on. A note "
                        "lies on the bed, with the name " + name + " written on the "
-                       "top in HER handwriting."),
+                       "top in HER handwriting. Enter 'wake up' to wake."),
                       ("\nYou wake in a cold sweat. Your dream had been so real, "
                        "it felt as if you had really been there reliving that same "
                        "night. You don't feel so well, but still, you decide to get "
@@ -310,19 +265,19 @@ def main():
                        "for the morning, but you still need to shower and brush your "
                        "teeth in the bathroom to the West."),
                       ("\nYou enter the bathroom and take your shower, but still, "
-                       "the cold feeling from that dream stays with you")]
+                       "the cold feeling from that dream stays with you.")]
 
     gameShortLoc = [ ("\nYou're back in the living room, struggling to keep your eyes open."),
                      ("\nYou're really TIRED, not HUNGRY."),
                      ("\nThe bed is so close..."),
-                     ("\nYou don't need to use the bathroom again"),
+                     ("\nYou don't need to use the bathroom again."),
                      ("\nEnter 'Sleep' to sleep."),
                      ("\nIt is unusually cold in the house..."),
                      ("\nThe note is still laying on the bed. You take in the handwriting of your "
                       "name, " + name + ", once again. It's just the same as that night..."),
                      ("\nYou should really get going if you want to get to work on time."),
                      ("\nDid you remember to take your medicine?"),
-                     ("\nYou give yourself a once-over in the mirror. You look like a mess today")]
+                     ("\nYou give yourself a once-over in the mirror. You look like a mess today.")]
                      
         #      N     S     E     W
     matrix = [[None, None, 1, 2],
