@@ -211,7 +211,122 @@ def main():
     playerScore = 0
     direction = "some way"
     name = str(input("What is your name? "))
-    
+
+    class Player:
+        def __init__(self, name, score, currLoc, moveCount, inventory):
+            self.name = name
+            self.score = score
+            self.currLoc = currLoc
+            self.moveCount = moveCount
+            self.inventory = inventory
+
+        def addScore(self):
+            self.score = self.score + 5
+
+
+    player = Player(name, 0, "Living Room", 0, "Nothing")
+
+    class Locale:
+        def __init__(self, name, longDes, shortDes, wasVisited, wasSearched, items):
+            self.name = name
+            self.longDes = longDes
+            self.shortDes = shortDes
+            self.wasVisited = wasVisited
+            self.wasSearched = wasSearched
+            self.items = items
+
+    livingRoom0 = Locale("Living Room",
+                         ("\nYou drop your keys and jacket on the table, exhausted "
+                         "after a long and difficult day of work, like all the others. "
+                         "Your room is just down the hall to the West, waiting for you."),
+                         ("\nYou're back in the living room, struggling to keep your eyes open."),
+                         False,
+                         False,
+                         "a map.")
+
+    kitchen0 = Locale("Kitchen",
+                     ("\nYou go into the kitchen, even though you aren't hungry. A "
+                      "letter with " + name + " on it is held on the fridge by a magnet, you "
+                      "don't really want to think about it..."),
+                     ("\nYou're really TIRED, not HUNGRY."),
+                      False,
+                      False,
+                      "a knife.")
+
+    bedroom0 = Locale("Bedroom",
+                     ("\nYour bedroom, with your bed in the center of the back "
+                      "wall, to the North. You take your medicine and prepare for "
+                      "bed. You'll have to remember to take it every morning and night"),
+                     ("\nThe bed is so close..."),
+                      False,
+                      False,
+                      "nothing.")
+
+    bathroom0 = Locale("Bathroom",
+                      ("\nYou use the bathroom, even though you didnt really have to, "
+                       "and prepare to go to sleep."),
+                      ("\nYou don't need to use the bathroom again."),
+                       False,
+                       False,
+                       "nothing.")
+
+    bed0 = Locale("Bed",
+                 ("\nYour bed, not as comfortable as it used to be... Still, "
+                  "you are weary enough to sleep. Enter 'Sleep' to sleep."),
+                 ("\nEnter 'Sleep' to sleep."),
+                  False,
+                  False,
+                  "nothing.")
+
+    livingRoomDream0 = Locale("Living Room?",
+                             ("\nYou drift to sleep, and find yourself arriving home "
+                              "after a long and difficult day of work, like all the others... "
+                              "You drop your keys and winter jacket on the table, "
+                              "exhausted. It takes you a minute to realize what you're "
+                              "doing, you should be asleep, right? A faint glow is coming "
+                              "from your bedroom down the hall."),
+                             ("\nIt is unusually cold in the house..."),
+                              False,
+                              False,
+                              "a key.")
+
+    bedroomDream0 = Locale("Bedroom?",
+                          ("\nYou push open the door, and find the TV still on. A note "
+                           "lies on the bed, with the name " + name + " written on the "
+                           "top in HER handwriting. Enter 'wake up' to wake."),
+                          ("\nThe note is still laying on the bed. You take in the handwriting of your "
+                           "name, " + name + ", once again. It's just the same as that night..."),
+                           False,
+                           False,
+                           "nothing.")
+
+    bed1 = Locale("Bed",
+                 ("\nYou wake in a cold sweat. Your dream had been so real, "
+                  "it felt as if you had really been there reliving that same "
+                  "night. You don't feel so well, but still, you decide to get "
+                  "out of bed and go to work."),
+                 ("\nYou should really get going if you want to get to work on time."),
+                  False,
+                  False,
+                  "nothing.")
+
+    bedroom1 = Locale("Bedroom",
+                     ("\nYou change into your work clothes, but you still need to shower and brush your "
+                      "teeth in the bathroom to the West."),
+                     ("\nYou feel like you might be forgetting something.."),
+                      False,
+                      False,
+                      "your medicine.")
+
+    bathroom1 = Locale("Bathroom",
+                      ("\nYou enter the bathroom and take your shower, but still, "
+                       "the cold feeling from that dream stays with you."),
+                       ("\nI knew you wouldn't forget to brush your teeth."),
+                       False,
+                       False,
+                       "nothing.")
+                       
+                           
     livingRoom0 = 0
     kitchen0 = 1
     bedRoom0 = 2
@@ -223,82 +338,7 @@ def main():
     bedRoom1 = 8
     bathroom1 = 9
     
-    placeVisit = [False,
-                  False,
-                  False,
-                  False,
-                  False,
-                  False,
-                  False,
-                  False,
-                  False,
-                  False]
     
-    items = ["a map.",
-             "a knife.",
-             "nothing.",
-             "nothing.",
-             "nothing.",
-             "nothing.",
-             "nothing.",
-             "nothing.",
-             "your medicine.",
-             "nothing."]
-    
-    placeSearched = [False,
-                     False,
-                     False,
-                     False,
-                     False,
-                     False,
-                     False,
-                     False,
-                     False,
-                     False]
-                   
-    gameLocations = [ ("\nYou drop your keys and jacket on the table, exhausted "
-                       "after a long and difficult day of work, like all the others. "
-                       "Your room is just down the hall to the West, waiting for you."),
-                      ("\nYou go into the kitchen, even though you aren't hungry. A "
-                       "letter with " + name + " on it is held on the fridge by a magnet, you "
-                       "don't really want to think about it..."),
-                      ("\nYour bedroom, with your bed in the center of the back "
-                       "wall, to the North. You take your medicine and prepare for "
-                       "bed. You'll have to remember to take it every morning and night"),
-                      ("\nYou use the bathroom, even though you didnt really have to, "
-                       "and prepare to go to sleep."), 
-                      ("\nYour bed, not as comfortable as it used to be... Still, "
-                       "you are weary enough to sleep. Enter 'Sleep' to sleep."),
-                      ("\nYou drift to sleep, and find yourself arriving home "
-                       "after a long and difficult day of work, like all the others... "
-                       "You drop your keys and winter jacket on the table, "
-                       "exhausted. It takes you a minute to realize what you're "
-                       "doing, you should be asleep, right? A faint glow is coming "
-                       "from your bedroom down the hall."),
-                      ("\nYou push open the door, and find the TV still on. A note "
-                       "lies on the bed, with the name " + name + " written on the "
-                       "top in HER handwriting. Enter 'wake up' to wake."),
-                      ("\nYou wake in a cold sweat. Your dream had been so real, "
-                       "it felt as if you had really been there reliving that same "
-                       "night. You don't feel so well, but still, you decide to get "
-                       "out of bed and go to work."),
-                      ("\nYou change into your work clothes and take your medicine "
-                       "for the morning, but you still need to shower and brush your "
-                       "teeth in the bathroom to the West."),
-                      ("\nYou enter the bathroom and take your shower, but still, "
-                       "the cold feeling from that dream stays with you.")]
-
-    gameShortLoc = [ ("\nYou're back in the living room, struggling to keep your eyes open."),
-                     ("\nYou're really TIRED, not HUNGRY."),
-                     ("\nThe bed is so close..."),
-                     ("\nYou don't need to use the bathroom again."),
-                     ("\nEnter 'Sleep' to sleep."),
-                     ("\nIt is unusually cold in the house..."),
-                     ("\nThe note is still laying on the bed. You take in the handwriting of your "
-                      "name, " + name + ", once again. It's just the same as that night..."),
-                     ("\nYou should really get going if you want to get to work on time."),
-                     ("\nDid you remember to take your medicine?"),
-                     ("\nYou give yourself a once-over in the mirror. You look like a mess today.")]
                      
         #      N     S     E     W
     matrix = [[0, 0, 1, 2],
@@ -312,7 +352,6 @@ def main():
               [7, 8, 8, 9],
               [9, 9, 8, 9]]
 
-    inventory = [ "Ring" ]
     start(title, intro, gameLocations, playerScore, placeVisit)
     end(game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory))
     
