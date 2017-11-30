@@ -2,6 +2,8 @@
 # CMPT 120 Project
 # Text-based Adventure
 
+from Locale.py import *
+
 def day():
     global days
     print("\nDay", days)
@@ -10,12 +12,12 @@ def day():
 def score(playerScore):
     print("\nYour score is: ", playerScore)
 
-def start(title, intro, gameLocations, playerScore, placeVisit):
+def start(title, intro, gameLoc):
     print(title)
     print("======\n")
     print(intro)
-    print(gameLocations[0])
-    placeVisit[0] = True
+    gameLoc[0].printLong()
+    gameLoc[0].searchLoc()
 
 
 
@@ -70,7 +72,7 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
         command = input("\nEnter a command: ").lower()
 
         if command == "help":
-            print(commands)
+            print("\nValid commands: North, South, East, West, Help, Search, Take, Drop, Look, Map, Points, Location, Quit")
 
         elif command == "quit":
             break
@@ -202,15 +204,14 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
             
 def main():
     intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
-    title = "\nAsleep"
-    commands = "\nValid commands: North, South, East, West, Help, Map, Points, Location, Quit"
+    title = "\nAsleep" 
     wrongWay = "\nYou can't go that way!"
     playerLocation = "Living Room"
     currentLocation = 0
     days = 0
-    playerScore = 0
     direction = "some way"
     name = str(input("What is your name? "))
+    gameLoc = []
 
     class Player:
         def __init__(self, name, score, currLoc, moveCount, inventory):
@@ -234,6 +235,18 @@ def main():
             self.wasVisited = wasVisited
             self.wasSearched = wasSearched
             self.items = items
+
+        def printLong(self):
+            print(self.longDes)
+
+        def printShort(self):
+            print(self.shortDes)
+
+        def visitLoc(self):
+            self.wasVisited = True
+
+        def searchLoc(self):
+            self.wasSearched = True
 
     livingRoom0 = Locale("Living Room",
                          ("\nYou drop your keys and jacket on the table, exhausted "
@@ -284,8 +297,8 @@ def main():
                               "You drop your keys and winter jacket on the table, "
                               "exhausted. It takes you a minute to realize what you're "
                               "doing, you should be asleep, right? A faint glow is coming "
-                              "from your bedroom down the hall."),
-                             ("\nIt is unusually cold in the house..."),
+                              "from your bedroom down the hall. You feel compelled to go to it"),
+                             ("\nIt is unusually cold in the house... The pull from the Bedroom is still there."),
                               False,
                               False,
                               "a key.")
@@ -325,19 +338,46 @@ def main():
                        False,
                        False,
                        "nothing.")
+
+    livingRoom1 = Locale("Living Room",
+                        ("/nYou grab your jacket and keys, somewhat ready to head ",
+                         "out for the day. Go 'south' to exit your home and go to work"),
+                         "\nIt is time to leave for work, unfortunately.",
+                         False,
+                         False,
+                         "a gold necklace.")
+
+    kitchen1 = Locale("Kitchen",
+                      "\nMaybe you should grab some breakfast, even if you'll be late.",
+                      "\nYou realize that the letter is gone...",
+                      False,
+                      False,
+                      "a delicious bowl of cereal.")
                        
-                           
-    livingRoom0 = 0
-    kitchen0 = 1
-    bedRoom0 = 2
-    bathroom0 = 3
-    bed0 = 4
-    livingRoomDream0 = 5
-    bedRoomDream0 = 6
-    bed1 = 7
-    bedRoom1 = 8
-    bathroom1 = 9
-    
+    gameLoc.append(livingRoom0)
+    gameLoc.append(kitchen0)
+    gameLoc.append(bedroom0)
+    gameLoc.append(bathroom0)
+    gameLoc.append(bed0)
+    gameLoc.append(livingRoomDream0)
+    gameLoc.append(bedroomDream0)
+    gameLoc.append(bed1)
+    gameLoc.append(bedroom1)
+    gameLoc.append(bathroom1)
+    gameLoc.append(livingRoom1)
+    gameLoc.append(kitchen1)
+# livingRoom0 = 0
+# kitchen0 = 1
+# bedRoom0 = 2
+# bathroom0 = 3
+# bed0 = 4
+# livingRoomDream0 = 5
+# bedRoomDream0 = 6
+# bed1 = 7
+# bedRoom1 = 8
+# bathroom1 = 9
+# livingRoom1 = 10
+# kitchen1 = 11
     
                      
         #      N     S     E     W
@@ -351,8 +391,8 @@ def main():
               [7, 8, 7, 7],
               [7, 8, 8, 9],
               [9, 9, 8, 9]]
-
-    start(title, intro, gameLocations, playerScore, placeVisit)
+    
+    start(title, intro, gameLoc)
     end(game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory))
     
 
