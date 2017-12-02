@@ -2,22 +2,24 @@
 # CMPT 120 Project
 # Text-based Adventure
 
-from Locale.py import *
+from Locale import *
+from Player import *
 
 def day():
     global days
     print("\nDay", days)
     print("=====")
 
-def score(playerScore):
-    print("\nYour score is: ", playerScore)
+def score(player):
+    print("\nYour score is: ", player.score)
 
-def start(title, intro, gameLoc):
+def start(title, intro, gameLoc, player):
     print(title)
     print("======\n")
     print(intro)
     gameLoc[0].printLong()
-    gameLoc[0].searchLoc()
+    gameLoc[0].visitLoc()
+    player.addScore()
 
 
 
@@ -30,44 +32,74 @@ def end(playerScore):
 
 gameMap = "                Bed\n                 |\n    Bathroom -- Room -- Living Room -- Kitchen"
 
-def goto(matrix, currentLocation, playerLocation, direction):
+def goto(matrix, gameLoc, player, direction):
 
-    if currentLocation == 0:
-        newLocation = matrix[currentLocation][direction]
+    if player.numLoc == 0:
+        newLocation = matrix[player.numLoc][direction]
     
-    elif currentLocation == 1:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 1:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 2:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 2:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 3:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 3:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 4:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 4:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 5:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 5:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 6:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 6:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 7:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 7:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 8:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 8:
+        newLocation = matrix[player.numLoc][direction]
 
-    elif currentLocation == 9:
-        newLocation = matrix[currentLocation][direction]
+    elif player.numLoc == 9:
+        newLocation = matrix[player.numLoc][direction]
+
+    if player.numLoc == newLocation:
+        print("You can not go that way!")
+
+    if newLocation == 0:
+        player.nameLoc = "Living Room"
+    elif newLocation == 1:
+        player.nameLoc = "Kitchen"
+    elif newLocation == 2:
+        player.nameLoc = "Bedroom"
+    elif newLocation == 3:
+        player.nameLoc = "Bathroom"
+    elif newLocation == 4:
+        player.nameLoc = "Bed"
+    elif newLocation == 5:
+        player.nameLoc = "Living Room?"
+    elif newLocation == 6:
+        player.nameLoc = "Bedroom?"
+    elif newLocation == 7:
+        player.nameLoc = "Bed"
+    elif newLocation == 8:
+        player.nameLoc = "Bedroom"
+    elif newLocation == 9:
+        player.nameLoc = "Bathroom"
+    elif newLocation == 10:
+        player.nameLoc = "Living Room"
+    elif newLocation == 11:
+        player.nameLoc = "Kitchen"
+    
+    player.numLoc = newLocation
     return newLocation
 
         
-def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory):
+def game(matrix, gameLoc, player):
     while True:
-        if "your medicine." in inventory:
-            return playerScore
+        if "your medicine" in player.inventory:
+            return player.score
         
         command = input("\nEnter a command: ").lower()
 
@@ -78,51 +110,52 @@ def game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, pl
             break
 
         elif command == "points":
-            score(playerScore)
+            print("\nYou have", player.score, "points")
 
         elif command == "map":
-            if "a map." in inventory:
+            if "a map." in player.inventory:
                 print(gameMap)
             else:
                 print("\nYou have no map!")
 
         elif command == "location":
-            print("\nLocation:", playerLocation)
+            print("\nLocation:", player.nameLoc)
 
         elif command == "search":
-            if placeSearched[currentLocation] == False:
-                placeSearched[currentLocation] = True
-                print("\nYou find", items[currentLocation])
+            if gameLoc[player.numLoc].wasSearched == False:
+                gameLoc[player.numLoc].searchLoc()
+                print("\nYou find a/an", gameLoc[player.numLoc].items)
             else:
                 print("\nYou've already searched here.")
 
         elif command == "take":
-            if placeSearched[currentLocation] == True:
-                if items[currentLocation] != "nothing.":
-                    inventory.append(items[currentLocation])
+            if gameLoc[player.numLoc].wasSearched == True:
+                takeItem = str(input("\nWhat do you want to take: ")).lower
+                if takeItem == gameLoc[player.numLoc].items and gameLoc[player.numLoc].items != "nothing":
+                    player.inventory.append(gameLoc[player.numLoc].items)
                     print("\nYou take the item.")
-                    items[currentLocation] = "nothing."
+                    gameLoc[player.numLoc].remItem
                 else:
-                    print("\nThere is nothing to take!")
+                    print("\nThere is nothing like that to take!")
             else:
                 print("\nYou have not searched here!")
                 
         elif command == "inventory":
-            print(inventory)
+            print(player.inventory)
 
         elif command == "look":
-            print(gameLocations[currentLocation])
+            print(gameLoc[player.numLoc].longDes)
 
         elif command == "north":
             direction = 0
-            place = goto(matrix, currentLocation, playerLocation, direction)
-            if placeVisit[place] == False:
-                print(gameLocations[place])
-                placeVisit[place] = True
-                playerScore = playerScore + 5
-                score(playerScore)
+            place = goto(matrix, gameLoc, player, direction)
+            if gameLoc[player.numLoc].wasVisited == False:
+                gameLoc[player.numLoc].printLong()
+                gameLoc[player.numLoc].searchLoc()
+                player.addScore()
+                score(player)
             else:
-                print(gameShortLoc[place])
+                gameLoc[player.numLoc].printShort()
             currentLocation = place
     
         elif command == "south":
@@ -206,47 +239,17 @@ def main():
     intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
     title = "\nAsleep" 
     wrongWay = "\nYou can't go that way!"
-    playerLocation = "Living Room"
-    currentLocation = 0
     days = 0
     direction = "some way"
     name = str(input("What is your name? "))
     gameLoc = []
 
-    class Player:
-        def __init__(self, name, score, currLoc, moveCount, inventory):
-            self.name = name
-            self.score = score
-            self.currLoc = currLoc
-            self.moveCount = moveCount
-            self.inventory = inventory
-
-        def addScore(self):
-            self.score = self.score + 5
+    
 
 
-    player = Player(name, 0, "Living Room", 0, "Nothing")
+    player = Player(name, 0, "Living Room", 0, 0, ["ring"])
 
-    class Locale:
-        def __init__(self, name, longDes, shortDes, wasVisited, wasSearched, items):
-            self.name = name
-            self.longDes = longDes
-            self.shortDes = shortDes
-            self.wasVisited = wasVisited
-            self.wasSearched = wasSearched
-            self.items = items
-
-        def printLong(self):
-            print(self.longDes)
-
-        def printShort(self):
-            print(self.shortDes)
-
-        def visitLoc(self):
-            self.wasVisited = True
-
-        def searchLoc(self):
-            self.wasSearched = True
+    
 
     livingRoom0 = Locale("Living Room",
                          ("\nYou drop your keys and jacket on the table, exhausted "
@@ -255,7 +258,7 @@ def main():
                          ("\nYou're back in the living room, struggling to keep your eyes open."),
                          False,
                          False,
-                         "a map.")
+                         "map")
 
     kitchen0 = Locale("Kitchen",
                      ("\nYou go into the kitchen, even though you aren't hungry. A "
@@ -264,7 +267,7 @@ def main():
                      ("\nYou're really TIRED, not HUNGRY."),
                       False,
                       False,
-                      "a knife.")
+                      "knife")
 
     bedroom0 = Locale("Bedroom",
                      ("\nYour bedroom, with your bed in the center of the back "
@@ -273,7 +276,7 @@ def main():
                      ("\nThe bed is so close..."),
                       False,
                       False,
-                      "nothing.")
+                      "nothing")
 
     bathroom0 = Locale("Bathroom",
                       ("\nYou use the bathroom, even though you didnt really have to, "
@@ -281,7 +284,7 @@ def main():
                       ("\nYou don't need to use the bathroom again."),
                        False,
                        False,
-                       "nothing.")
+                       "nothing")
 
     bed0 = Locale("Bed",
                  ("\nYour bed, not as comfortable as it used to be... Still, "
@@ -289,7 +292,7 @@ def main():
                  ("\nEnter 'Sleep' to sleep."),
                   False,
                   False,
-                  "nothing.")
+                  "nothing")
 
     livingRoomDream0 = Locale("Living Room?",
                              ("\nYou drift to sleep, and find yourself arriving home "
@@ -301,7 +304,7 @@ def main():
                              ("\nIt is unusually cold in the house... The pull from the Bedroom is still there."),
                               False,
                               False,
-                              "a key.")
+                              "key")
 
     bedroomDream0 = Locale("Bedroom?",
                           ("\nYou push open the door, and find the TV still on. A note "
@@ -311,7 +314,7 @@ def main():
                            "name, " + name + ", once again. It's just the same as that night..."),
                            False,
                            False,
-                           "nothing.")
+                           "nothing")
 
     bed1 = Locale("Bed",
                  ("\nYou wake in a cold sweat. Your dream had been so real, "
@@ -321,7 +324,7 @@ def main():
                  ("\nYou should really get going if you want to get to work on time."),
                   False,
                   False,
-                  "nothing.")
+                  "nothing")
 
     bedroom1 = Locale("Bedroom",
                      ("\nYou change into your work clothes, but you still need to shower and brush your "
@@ -329,7 +332,7 @@ def main():
                      ("\nYou feel like you might be forgetting something.."),
                       False,
                       False,
-                      "your medicine.")
+                      "medicine")
 
     bathroom1 = Locale("Bathroom",
                       ("\nYou enter the bathroom and take your shower, but still, "
@@ -337,7 +340,7 @@ def main():
                        ("\nI knew you wouldn't forget to brush your teeth."),
                        False,
                        False,
-                       "nothing.")
+                       "nothing")
 
     livingRoom1 = Locale("Living Room",
                         ("/nYou grab your jacket and keys, somewhat ready to head ",
@@ -345,14 +348,14 @@ def main():
                          "\nIt is time to leave for work, unfortunately.",
                          False,
                          False,
-                         "a gold necklace.")
+                         "gold necklace")
 
     kitchen1 = Locale("Kitchen",
                       "\nMaybe you should grab some breakfast, even if you'll be late.",
                       "\nYou realize that the letter is gone...",
                       False,
                       False,
-                      "a delicious bowl of cereal.")
+                      "bowl of cereal")
                        
     gameLoc.append(livingRoom0)
     gameLoc.append(kitchen0)
@@ -389,11 +392,13 @@ def main():
               [5, 5, 5, 6],
               [6, 6, 5, 6],
               [7, 8, 7, 7],
-              [7, 8, 8, 9],
-              [9, 9, 8, 9]]
+              [7, 8, 10, 9],
+              [9, 9, 8, 9],
+              [10, 10, 11, 8],
+              [11, 11, 11, 10]]
     
-    start(title, intro, gameLoc)
-    end(game(matrix, gameLocations, gameShortLoc, playerScore, placeVisit, items, placeSearched, playerLocation, currentLocation, inventory))
+    start(title, intro, gameLoc, player)
+    end(game(matrix, gameLoc, player))
     
 
 main()
