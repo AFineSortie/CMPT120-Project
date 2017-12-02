@@ -113,7 +113,7 @@ def game(matrix, gameLoc, player):
             print("\nYou have", player.score, "points")
 
         elif command == "map":
-            if "a map." in player.inventory:
+            if "map" in player.inventory:
                 print(gameMap)
             else:
                 print("\nYou have no map!")
@@ -126,15 +126,15 @@ def game(matrix, gameLoc, player):
                 gameLoc[player.numLoc].searchLoc()
                 print("\nYou find a/an", gameLoc[player.numLoc].items)
             else:
-                print("\nYou've already searched here.")
+                print("\nThere is a/an", gameLoc[player.numLoc].items, "here.")
 
         elif command == "take":
             if gameLoc[player.numLoc].wasSearched == True:
-                takeItem = str(input("\nWhat do you want to take: ")).lower
-                if takeItem == gameLoc[player.numLoc].items and gameLoc[player.numLoc].items != "nothing":
+                takeItem = str(input("\nWhat do you want to take: "))
+                if takeItem.lower() == str(gameLoc[player.numLoc].items) and gameLoc[player.numLoc].items != "nothing":
                     player.inventory.append(gameLoc[player.numLoc].items)
                     print("\nYou take the item.")
-                    gameLoc[player.numLoc].remItem
+                    gameLoc[player.numLoc].remItem()
                 else:
                     print("\nThere is nothing like that to take!")
             else:
@@ -151,7 +151,7 @@ def game(matrix, gameLoc, player):
             place = goto(matrix, gameLoc, player, direction)
             if gameLoc[player.numLoc].wasVisited == False:
                 gameLoc[player.numLoc].printLong()
-                gameLoc[player.numLoc].searchLoc()
+                gameLoc[player.numLoc].visitLoc()
                 player.addScore()
                 score(player)
             else:
@@ -160,68 +160,68 @@ def game(matrix, gameLoc, player):
     
         elif command == "south":
             direction = 1
-            place = goto(matrix, currentLocation, playerLocation, direction)
-            if placeVisit[place] == False:
-                print(gameLocations[place])
-                placeVisit[place] = True
-                playerScore = playerScore + 5
-                score(playerScore)
+            place = goto(matrix, gameLoc, player, direction)
+            if gameLoc[player.numLoc].wasVisited == False:
+                gameLoc[player.numLoc].printLong()
+                gameLoc[player.numLoc].visitLoc()
+                player.addScore()
+                score(player)
             else:
-                print(gameShortLoc[place])
+                gameLoc[player.numLoc].printShort()
             currentLocation = place
 
         elif command == "east":
             direction = 2
-            place = goto(matrix, currentLocation, playerLocation, direction)
-            if placeVisit[place] == False:
-                print(gameLocations[place])
-                placeVisit[place] = True
-                playerScore = playerScore + 5
-                score(playerScore)
+            place = goto(matrix, gameLoc, player, direction)
+            if gameLoc[player.numLoc].wasVisited == False:
+                gameLoc[player.numLoc].printLong()
+                gameLoc[player.numLoc].visitLoc()
+                player.addScore()
+                score(player)
             else:
-                print(gameShortLoc[place])
+                gameLoc[player.numLoc].printShort()
             currentLocation = place
             
         elif command == "west":
             direction = 3
-            place = goto(matrix, currentLocation, playerLocation, direction)
-            if placeVisit[place] == False:
-                print(gameLocations[place])
-                placeVisit[place] = True
-                playerScore = playerScore + 5
-                score(playerScore)
+            place = goto(matrix, gameLoc, player, direction)
+            if gameLoc[player.numLoc].wasVisited == False:
+                gameLoc[player.numLoc].printLong()
+                gameLoc[player.numLoc].visitLoc()
+                player.addScore()
+                score(player)
             else:
-                print(gameShortLoc[place])
+                gameLoc[player.numLoc].printShort()
             currentLocation = place
 
         elif command == "sleep":
-            if "a knife." in inventory:
+            if "knife" in player.inventory:
                 print("\nYou shouldn't have taken a knife to bed with you! You accidentally cut yourself and have to go to the hospital.")
                 return playerScore
-            if currentLocation == 4:
-                currentLocation = 5
+            if player.numLoc == 4:
+                player.numLoc = 5
                 place = 5
-                if placeVisit[place] == False:
-                    print(gameLocations[place])
-                    placeVisit[place] = True
-                    playerScore = playerScore + 5
-                    score(playerScore)
+                if gameLoc[player.numLoc].wasVisited == False:
+                    gameLoc[player.numLoc].printLong()
+                    gameLoc[player.numLoc].visitLoc()
+                    player.addScore()
+                    score(player)
                 else:
-                    print(gameShortLoc[place])
+                    gameLoc[player.numLoc].printShort()
             else:
                 print("\nYou can't possibly expect to sleep here...")
 
         elif command == "wake up":
-            if currentLocation == 5 or currentLocation == 6:
-                currentLocation = 7
+            if player.numLoc == 5 or player.numLoc == 6:
+                player.numLoc = 7
                 place = 7
-                if placeVisit[place] == False:
-                    print(gameLocations[place])
-                    placeVisit[place] = True
-                    playerScore = playerScore + 5
-                    score(playerScore)
+                if gameLoc[player.numLoc].wasVisited == False:
+                    gameLoc[player.numLoc].printLong()
+                    gameLoc[player.numLoc].visitLoc()
+                    player.addScore()
+                    score(player)
                 else:
-                    print(gameShortLoc[place])
+                    gameLoc[player.numLoc].printShort()
 
             else:
                 print("\nYou're not asleep, are you?")
@@ -343,7 +343,7 @@ def main():
                        "nothing")
 
     livingRoom1 = Locale("Living Room",
-                        ("/nYou grab your jacket and keys, somewhat ready to head ",
+                        ("\nYou grab your jacket and keys, somewhat ready to head ",
                          "out for the day. Go 'south' to exit your home and go to work"),
                          "\nIt is time to leave for work, unfortunately.",
                          False,
