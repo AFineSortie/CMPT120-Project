@@ -67,13 +67,14 @@ def goto(matrix, gameLoc, player, direction):
         
 def game(matrix, gameLoc, player):
     while True:
-        if "your medicine" in player.inventory:
+        if "key" not in player.inventory and player.numLoc == 10:
+            print("\nYou can't find your keys!")
             return player.score
         
         command = input("\nEnter a command: ").lower()
 
         if command == "help":
-            print("\nValid commands: North, South, East, West, Help, Search, Take, Drop, Look, Map, Points, Location, Quit")
+            print("\nValid commands: North, South, East, West, Help, Search, Take, Drop, Use, Look, Map, Points, Location, Quit")
 
         elif command == "quit":
             break
@@ -159,7 +160,6 @@ def game(matrix, gameLoc, player):
                 score(player)
             else:
                 gameLoc[player.numLoc].printShort()
-            currentLocation = place
     
         elif command == "south":
             direction = 1
@@ -171,7 +171,6 @@ def game(matrix, gameLoc, player):
                 score(player)
             else:
                 gameLoc[player.numLoc].printShort()
-            currentLocation = place
 
         elif command == "east":
             direction = 2
@@ -183,7 +182,6 @@ def game(matrix, gameLoc, player):
                 score(player)
             else:
                 gameLoc[player.numLoc].printShort()
-            currentLocation = place
             
         elif command == "west":
             direction = 3
@@ -195,7 +193,6 @@ def game(matrix, gameLoc, player):
                 score(player)
             else:
                 gameLoc[player.numLoc].printShort()
-            currentLocation = place
 
         elif command == "sleep":
             if "knife" in player.inventory:
@@ -203,7 +200,7 @@ def game(matrix, gameLoc, player):
                 return player.score
             if player.numLoc == 4:
                 player.numLoc = 5
-                place = 5
+                player.nameLoc = "Living Room?"
                 if gameLoc[player.numLoc].wasVisited == False:
                     gameLoc[player.numLoc].printLong()
                     gameLoc[player.numLoc].visitLoc()
@@ -217,7 +214,7 @@ def game(matrix, gameLoc, player):
         elif command == "wake up":
             if player.numLoc == 5 or player.numLoc == 6:
                 player.numLoc = 7
-                place = 7
+                player.nameLoc = "Bed"
                 if gameLoc[player.numLoc].wasVisited == False:
                     gameLoc[player.numLoc].printLong()
                     gameLoc[player.numLoc].visitLoc()
