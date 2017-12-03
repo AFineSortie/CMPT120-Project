@@ -9,3 +9,9 @@ class Player:
 
     def addScore(self):
         self.score = self.score + 5
+
+    def dropItem(self, item):
+        self.inventory.remove(item)
+
+    def remItem(self, item):
+        self.inventory.remove(item)

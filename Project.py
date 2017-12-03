@@ -5,10 +5,7 @@
 from Locale import *
 from Player import *
 
-def day():
-    global days
-    print("\nDay", days)
-    print("=====")
+
 
 def score(player):
     print("\nYour score is: ", player.score)
@@ -34,38 +31,10 @@ gameMap = "                Bed\n                 |\n    Bathroom -- Room -- Livi
 
 def goto(matrix, gameLoc, player, direction):
 
-    if player.numLoc == 0:
-        newLocation = matrix[player.numLoc][direction]
-    
-    elif player.numLoc == 1:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 2:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 3:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 4:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 5:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 6:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 7:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 8:
-        newLocation = matrix[player.numLoc][direction]
-
-    elif player.numLoc == 9:
-        newLocation = matrix[player.numLoc][direction]
+    newLocation = matrix[player.numLoc][direction]
 
     if player.numLoc == newLocation:
-        print("You can not go that way!")
+        print("\nYou can not go that way!")
 
     if newLocation == 0:
         player.nameLoc = "Living Room"
@@ -139,6 +108,40 @@ def game(matrix, gameLoc, player):
                     print("\nThere is nothing like that to take!")
             else:
                 print("\nYou have not searched here!")
+
+        elif command == "drop":
+            dropItem = str(input("\nWhat do you want to drop: ")).lower()
+            if dropItem in player.inventory and gameLoc[player.numLoc].items == "nothing":
+                player.dropItem(dropItem)
+                gameLoc[player.numLoc].items = dropItem
+                print("\nYou drop the", dropItem + ".")
+            else:
+                print("\nYou can't drop that!")
+
+        elif command == "use":
+            useItem = str(input("\nWhat do you want to use: ")).lower()
+            if useItem in player.inventory:
+                if useItem == "knife":
+                    onWhat = str(input("\nWhat do you want to use the knife on: ")).lower()
+                    if onWhat == "self" or onWhat == "myself" or onWhat == player.name:
+                        print("\nWhy would you go and do that! Now you have to go to the hospital!")
+                        return player.score
+                    else:
+                        print("\nYou cant use the knife on that.")
+                elif useItem == "key":
+                    if player.numLoc == 10:
+                        print("\nYou head off to work once more.")
+                        return player.score
+                    else:
+                        print("\nWhy would you use the front door key here?")
+                elif useItem == "bowl of cereal":
+                    print("\nMmm delicious cereal.")
+                    player.remItem("bowl of cereal")
+                else:
+                    print("\nYou can't use that now")
+            else:
+                print("\nYou don't have anything like that.")
+                
                 
         elif command == "inventory":
             print(player.inventory)
@@ -197,7 +200,7 @@ def game(matrix, gameLoc, player):
         elif command == "sleep":
             if "knife" in player.inventory:
                 print("\nYou shouldn't have taken a knife to bed with you! You accidentally cut yourself and have to go to the hospital.")
-                return playerScore
+                return player.score
             if player.numLoc == 4:
                 player.numLoc = 5
                 place = 5
@@ -343,9 +346,9 @@ def main():
                        "nothing")
 
     livingRoom1 = Locale("Living Room",
-                        ("\nYou grab your jacket and keys, somewhat ready to head ",
-                         "out for the day. Go 'south' to exit your home and go to work"),
-                         "\nIt is time to leave for work, unfortunately.",
+                        ("\nYou grab your jacket and keys, somewhat ready to head "
+                         "out for the day. You have to unlock the door first though..."),
+                        ("\nIt is time to leave for work, unfortunately."),
                          False,
                          False,
                          "gold necklace")
