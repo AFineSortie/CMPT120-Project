@@ -24,8 +24,13 @@ def end(playerScore):
     print("\nTo Be Continued...")
     print("Final score:", playerScore, "\n")
     print("(c) 2017 Christopher Petrucelli, christopher.petrucelli1@marist.edu")
+    again = input("\nDo you want to play again? ").lower()
+    if again == "yes" or again == "y":
+        return True
+    else:
+        print("\nThanks for playing!")
+        return False
 
-#end() Testing new end function
 
 gameMap = "                Bed\n                 |\n    Bathroom -- Room -- Living Room -- Kitchen"
 
@@ -74,7 +79,7 @@ def game(matrix, gameLoc, player):
         command = input("\nEnter a command: ").lower()
 
         if command == "help":
-            print("\nValid commands: North, South, East, West, Help, Search, Take, Drop, Use, Look, Map, Points, Location, Quit")
+            print("\nValid commands: North, South, East, West, Help, Search, Take, Drop, Use, Unlock, Look, Map, Points, Location, Quit")
 
         elif command == "quit":
             break
@@ -129,12 +134,6 @@ def game(matrix, gameLoc, player):
                         return player.score
                     else:
                         print("\nYou cant use the knife on that.")
-                elif useItem == "key":
-                    if player.numLoc == 10:
-                        print("\nYou head off to work once more.")
-                        return player.score
-                    else:
-                        print("\nWhy would you use the front door key here?")
                 elif useItem == "bowl of cereal":
                     print("\nMmm delicious cereal.")
                     player.remItem("bowl of cereal")
@@ -142,7 +141,15 @@ def game(matrix, gameLoc, player):
                     print("\nYou can't use that now")
             else:
                 print("\nYou don't have anything like that.")
-                
+
+        elif command == "unlock":
+            if player.numLoc == 10 and "key" in player.inventory:
+                print("\nYou unlock the door and head off to work once more.")
+                return player.score
+            elif "key" not in player.inventory:
+                print("\nYou don't have the front door key!")
+            elif player.numLoc != 10 and "key" in player.inventory:
+                print("\nYou can't use the front door key here!")
                 
         elif command == "inventory":
             print(player.inventory)
@@ -236,22 +243,24 @@ def game(matrix, gameLoc, player):
   
             
 def main():
-    intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
-    title = "\nAsleep" 
-    wrongWay = "\nYou can't go that way!"
-    days = 0
-    direction = "some way"
-    name = str(input("What is your name? "))
-    gameLoc = []
+    again = True
+    while again == True:
+        intro = "\nYou finally pull into your driveway after your hour drive home. You shut off your car, unlock your front door, and enter."
+        title = "\nAsleep" 
+        wrongWay = "\nYou can't go that way!"
+        days = 0
+        direction = "some way"
+        name = str(input("\nWhat is your name? "))
+        gameLoc = []
 
     
 
 
-    player = Player(name, 0, "Living Room", 0, 0, ["ring"])
+        player = Player(name, 0, "Living Room", 0, 0, ["ring"])
 
     
 
-    livingRoom0 = Locale("Living Room",
+        livingRoom0 = Locale("Living Room",
                          ("\nYou drop your keys and jacket on the table, exhausted "
                          "after a long and difficult day of work, like all the others. "
                          "Your room is just down the hall to the West, waiting for you."),
@@ -260,7 +269,7 @@ def main():
                          False,
                          "map")
 
-    kitchen0 = Locale("Kitchen",
+        kitchen0 = Locale("Kitchen",
                      ("\nYou go into the kitchen, even though you aren't hungry. A "
                       "letter with " + name + " on it is held on the fridge by a magnet, you "
                       "don't really want to think about it..."),
@@ -269,7 +278,7 @@ def main():
                       False,
                       "knife")
 
-    bedroom0 = Locale("Bedroom",
+        bedroom0 = Locale("Bedroom",
                      ("\nYour bedroom, with your bed in the center of the back "
                       "wall, to the North. You take your medicine and prepare for "
                       "bed. You'll have to remember to take it every morning and night"),
@@ -278,7 +287,7 @@ def main():
                       False,
                       "nothing")
 
-    bathroom0 = Locale("Bathroom",
+        bathroom0 = Locale("Bathroom",
                       ("\nYou use the bathroom, even though you didnt really have to, "
                        "and prepare to go to sleep."),
                       ("\nYou don't need to use the bathroom again."),
@@ -286,7 +295,7 @@ def main():
                        False,
                        "nothing")
 
-    bed0 = Locale("Bed",
+        bed0 = Locale("Bed",
                  ("\nYour bed, not as comfortable as it used to be... Still, "
                   "you are weary enough to sleep. Enter 'Sleep' to sleep."),
                  ("\nEnter 'Sleep' to sleep."),
@@ -294,7 +303,7 @@ def main():
                   False,
                   "nothing")
 
-    livingRoomDream0 = Locale("Living Room?",
+        livingRoomDream0 = Locale("Living Room?",
                              ("\nYou drift to sleep, and find yourself arriving home "
                               "after a long and difficult day of work, like all the others... "
                               "You drop your keys and winter jacket on the table, "
@@ -306,7 +315,7 @@ def main():
                               False,
                               "key")
 
-    bedroomDream0 = Locale("Bedroom?",
+        bedroomDream0 = Locale("Bedroom?",
                           ("\nYou push open the door, and find the TV still on. A note "
                            "lies on the bed, with the name " + name + " written on the "
                            "top in HER handwriting. Enter 'wake up' to wake."),
@@ -316,7 +325,7 @@ def main():
                            False,
                            "nothing")
 
-    bed1 = Locale("Bed",
+        bed1 = Locale("Bed",
                  ("\nYou wake in a cold sweat. Your dream had been so real, "
                   "it felt as if you had really been there reliving that same "
                   "night. You don't feel so well, but still, you decide to get "
@@ -326,7 +335,7 @@ def main():
                   False,
                   "nothing")
 
-    bedroom1 = Locale("Bedroom",
+        bedroom1 = Locale("Bedroom",
                      ("\nYou change into your work clothes, but you still need to shower and brush your "
                       "teeth in the bathroom to the West."),
                      ("\nYou feel like you might be forgetting something.."),
@@ -334,7 +343,7 @@ def main():
                       False,
                       "medicine")
 
-    bathroom1 = Locale("Bathroom",
+        bathroom1 = Locale("Bathroom",
                       ("\nYou enter the bathroom and take your shower, but still, "
                        "the cold feeling from that dream stays with you."),
                        ("\nI knew you wouldn't forget to brush your teeth."),
@@ -342,7 +351,7 @@ def main():
                        False,
                        "nothing")
 
-    livingRoom1 = Locale("Living Room",
+        livingRoom1 = Locale("Living Room",
                         ("\nYou grab your jacket and keys, somewhat ready to head "
                          "out for the day. You have to unlock the door first though..."),
                         ("\nIt is time to leave for work, unfortunately."),
@@ -350,25 +359,25 @@ def main():
                          False,
                          "gold necklace")
 
-    kitchen1 = Locale("Kitchen",
+        kitchen1 = Locale("Kitchen",
                       "\nMaybe you should grab some breakfast, even if you'll be late.",
                       "\nYou realize that the letter is gone...",
                       False,
                       False,
                       "bowl of cereal")
                        
-    gameLoc.append(livingRoom0)
-    gameLoc.append(kitchen0)
-    gameLoc.append(bedroom0)
-    gameLoc.append(bathroom0)
-    gameLoc.append(bed0)
-    gameLoc.append(livingRoomDream0)
-    gameLoc.append(bedroomDream0)
-    gameLoc.append(bed1)
-    gameLoc.append(bedroom1)
-    gameLoc.append(bathroom1)
-    gameLoc.append(livingRoom1)
-    gameLoc.append(kitchen1)
+        gameLoc.append(livingRoom0)
+        gameLoc.append(kitchen0)
+        gameLoc.append(bedroom0)
+        gameLoc.append(bathroom0)
+        gameLoc.append(bed0)
+        gameLoc.append(livingRoomDream0)
+        gameLoc.append(bedroomDream0)
+        gameLoc.append(bed1)
+        gameLoc.append(bedroom1)
+        gameLoc.append(bathroom1)
+        gameLoc.append(livingRoom1)
+        gameLoc.append(kitchen1)
 # livingRoom0 = 0
 # kitchen0 = 1
 # bedRoom0 = 2
@@ -384,21 +393,22 @@ def main():
     
                      
         #      N     S     E     W
-    matrix = [[0, 0, 1, 2],
-              [1, 1, 1, 0],
-              [4, 2, 0, 3],
-              [3, 3, 2, 3],
-              [4, 2, 4, 4],
-              [5, 5, 5, 6],
-              [6, 6, 5, 6],
-              [7, 8, 7, 7],
-              [7, 8, 10, 9],
-              [9, 9, 8, 9],
-              [10, 10, 11, 8],
-              [11, 11, 11, 10]]
+        matrix = [[0, 0, 1, 2],
+                 [1, 1, 1, 0],
+                 [4, 2, 0, 3],
+                 [3, 3, 2, 3],
+                 [4, 2, 4, 4],
+                 [5, 5, 5, 6],
+                 [6, 6, 5, 6],
+                 [7, 8, 7, 7],
+                 [7, 8, 10, 9],
+                 [9, 9, 8, 9],
+                 [10, 10, 11, 8],
+                 [11, 11, 11, 10]]
+
     
-    start(title, intro, gameLoc, player)
-    end(game(matrix, gameLoc, player))
+        start(title, intro, gameLoc, player)
+        again = end(game(matrix, gameLoc, player))
     
 
 main()
